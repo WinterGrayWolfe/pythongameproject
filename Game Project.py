@@ -15,8 +15,9 @@ class Player:
     self.health = 10
     self.max_health = 10
     self.items = []
-    self.ammo = 5
+    self.ammo = 4
     self.alive = True
+    self.count = 0
     self.name = input("+++ Greetings, Inquisitor +++\nEnter your credentials below, starting with your name: ")
 
     time.sleep(1)
@@ -105,7 +106,7 @@ class Player:
       
   def ranged_attack(self, enemy):
     ranged_damage = 10
-    if "Bolter" in self.items or "Shotgun" in self.items:
+    if "Bolter" in self.items or "Shotgun" or "Stub Pistol" in self.items:
       if self.ammo == 0:
         print("The weapon clicks uselessly, out of ammo.")
       if self.ammo > 0:
@@ -125,13 +126,12 @@ class Enemy:
   def __init__(self):
     self.health = 10
     count = 0
-    self.damage = random.randint(1, 3)
     self.alive = True
 
   def attack(self, player):
     print("The heretic lunges out with a rusty combat knife")
     time.sleep(2)
-    player.lose_health(self.damage)
+    player.lose_health(random.randint(1, 3))
   
   def lose_health(self, amount):
     self.health -= amount
@@ -146,15 +146,37 @@ class Enemy:
     if self.alive == False:
       del self
     
+#Second Enemy Type
+class Elite_Enemy:
 
+  def __init__(self):
+    self.health = 15
+    count = 0
+    self.alive = True
 
+  def attack(self, player):
+    print("The heretic fires a shot with their laspistol")
+    time.sleep(2)
+    player.lose_health(random.randint(1, 4))
+  
+  def lose_health(self, amount):
+    self.health -= amount
+    if self.health <= 0:
+      self.health = 0
+      self.death()
+    
+  def death(self):
+    if self.health == 0:
+      self.alive = False
+      print("The heretic falls, blood spilling down their lips. They try to form words, but no sound comes out. They slump over, dead.")
+    if self.alive == False:
+      del self
     
 #All combat and combat actions
 def combat(player, enemy):
-  enemy = Enemy()
   while enemy.alive == True or player.alive == True:
     time.sleep(2)
-    battle = input("The heretic stands before you, rusty combat knife in hand. What do you do?\n Melee_Attack: Press 1\n Ranged_Attack: Press 2\n Use Bandage: Press 3\n Run: Press 4\n Supplies: Press 5\n")
+    battle = input("The heretic stands before you, weapon in hand. What do you do?\n Melee_Attack: Press 1\n Ranged_Attack: Press 2\n Use Bandage: Press 3\n Run: Press 4\n Supplies: Press 5\n")
     if battle == "1":
       player.melee_attack(enemy)
       time.sleep(2)
@@ -204,6 +226,7 @@ while not valid:
     time.sleep(.5)
     player = Player()
     enemy = Enemy()
+    elite_enemy = Elite_Enemy()
   else:
       print("+++ Clearance Revoked. Kill Team Inbound. Try Again. +++")
 
@@ -213,17 +236,17 @@ print("+++ BEGIN PURGE +++")
 
 time.sleep(3)
 
-print("In the grim darkness of the far future there is only war. There is no peace amongst the stars, only an eternity of carnage and slaughter, and the laughter of thirsting gods.\n")
+print("In the grim darkness of the far future there is only war. There is no peace amongst the stars, only an eternity of carnage and slaughter, and the laughter of thirsting gods.\n ++PRESS ENTER TO CONTINUE:++\n")
 
-time.sleep(5)
+input()
 
 print("The Crypt of St. Lorens stands before you. You are Inquisitor {name} of the Ordo Cryptum. As a member of the Holy Inquisition, you are the last bastion of light against the despair of the darkness. You have been tasked by the Imperium of Man to root out the members of a heretical cult within the crypt, and destroy them.".format(name = player.name))
 
-time.sleep(7)
+input()
 
 print("\nBefore you sits an ancient human skull, fragile with age and decay. You can see mechanical devices embedded inside the skull. It appears to be the device that opens the door. Inside its dry eye socket, a dim red light glows. The entry button.")
 
-time.sleep(6)
+input()
 
 print("\nDo you press the button? Or walk away?")
 
@@ -233,57 +256,61 @@ while not entrance:
     if button == "1":
       entrance = True
       time.sleep(1)
-    else:
+    if button == "2":
         print("+++ You walk away, shirking your duties. Kill Team Inbound. +++")
         time.sleep(3)
         sys.exit()
 
+        
+
 print("\nThe stone door rumbles open, powered by an unseen source.")
 
-time.sleep(4)
+input()
 
 print("\nA single staircase descends into the darkness. Each step downwards lowers the light around you. As you activate your lumen, the click of a sodium lamp igniting fills the silence, and a dim light illuminates your path forward.")
 
-time.sleep(7)
+input()
 
 print("\nAt the bottom of the stairs is a small, square room made of ancient stone. Moss covers the walls and the air is thick with the smell of decay.")
 
-time.sleep(6)
+input()
 
 print("\nYour lumen shines on the far wall. Carved into the stone are words written in High Gothic:")
 
-time.sleep(4)
+input()
 
 print("+++ Ad Imperatorem +++")
 
-time.sleep(3)
+input()
 
 print("\nBefore you can examine any further, a heretic dressed in tattered robes springs from the shadows. Their hands are slick with blood, a twisted grin upon their face.\n") 
 
-time.sleep(5)
+input()
 
 print("You prepare to grant them the Emperor's mercy.")
 
-time.sleep(4)
+input()
 
 combat(player, enemy)
 
-time.sleep(3)
+time.sleep(2)
 
 print("Gathering your wits, you look about the humid and dark depths of the crypt.")
 
-time.sleep(4)
+input()
 
 print("To your left, a locked wooden door that you can easily smash down.\nTo your right, a smooth stone path slopes down into the darkness.")
 
-time.sleep(4)
+input()
+#Definitions of both room choices
 
 def left_room1():
   print("The door splinters easily as your armored boot smashes into the rotted wood. The small store room seems to be filled with mostly empty crates and dark, old bloodstains. Another pathway leads further into the crypt at the end of the room. Before you can move deeper, your boot catches on a thin wire on the door")
-  time.sleep(7)
-  lr1 = input("Dodge: Press 1\nDisarm: Press 2\nDestroy: Press 3\n")
+  input()
+
   lr1ex = False
   while not lr1ex:
+    lr1 = input("Dodge: Press 1\nDisarm: Press 2\nDestroy: Press 3\n")
     if lr1 == "1":
       count = random.randint(1, 20) - 1
       if count >= 10:
@@ -294,6 +321,7 @@ def left_room1():
         if player.health <= 0:
           player.death()
       lr1ex = True
+
 
     if lr1 == "2":
       count = random.randint(1, 20) + 3
@@ -316,6 +344,10 @@ def left_room1():
         if player.health <= 0:
           player.death()
       lr1ex = True
+  else:
+    print("Invalid Input")
+  
+
 
 def left_loot1():
   print("There are usable supplies inside the room. You manage to find a bandage, and two bullets.")
@@ -325,17 +357,16 @@ def left_loot1():
 
 def right_room1():
   print("Each step you take down the right path leads further and further down. The walls are narrow, squeezing in on your shoulders as you plunge into the darkness.")
-  time.sleep(4)
+  input()
   print("You worry you will get stuck inside the passage, but just as the walls seem to squeeze in around you, it opens up into a small room.")
-  time.sleep(4)
+  input()
   print("You find yourself inside a ritual room. Human remains scatter the floor, viscera and limbs piled in the center. Written in blood on the floor is an eight pointed star: The symbol of Chaos.")
-  time.sleep(4)
+  input()
   print("You recoil as even looking at the symbol causes physical pain.\n")
-  time.sleep(2)
-  rr1 = input("What do you do?\nDestroy the symbol: Press 1\nLeave the symbol and continue: Press 2\nCut your hand and offer your own blood: Press 3\n")
-  time.sleep(2)
+  input()
   rr1ex = False
   while not rr1ex:
+    rr1 = input("What do you do?\nDestroy the symbol: Press 1\nLeave the symbol and continue: Press 2\nCut your hand and offer your own blood: Press 3\n")
     if rr1 == "1":
       count = random.randint(1, 20) + 3
       if count >= 10:
@@ -364,15 +395,18 @@ def right_room1():
       print("You offer your blood to the sacrifice. A voice speaks in your head: 'Excellent my child, I shall grant you the power you seek.'\n You feel as though you've lost something important, a steep price paid. You lose 4 health, but gain 4 ammo")
       player.health -= 4
       player.ammo += 4
+      player.count += 1
       if player.health <= 0:
           player.death()
-      rr1ex = True   
+      rr1ex = True
+  else:
+    print('Invalid Input')
+  
+# Actual Room Choice Narrative
 
-
-
-room_choice_1 = input("\nWhich path do you choose?\nLeft: Press 1\nRight: Press 2\n")
 rc1 = False
 while not rc1:
+  room_choice_1 = input("\nWhich path do you choose?\nLeft: Press 1\nRight: Press 2\n")
   if room_choice_1 == "1":
     left_room1()
     time.sleep(4)
@@ -382,10 +416,168 @@ while not rc1:
     right_room1()
     time.sleep(4)
     rc1 = True
-  else: print("Invalid Input")
-
-
+  else:
+    print("Invalid Input")
+  
 
  
+#Section 2
+
+input()
+
+print("The exit takes you down a long, descending cooridor. Quotations of St. Laurens fill the hallway, but all of them have been scratched out. Chaos symbols litter the hall, most of them drawn in human blood. The very hall itself seems to curve and warp as you walk down it.")
+
+input()
+
+print("As you reach the end of the hall, you see the chamber open up into a massive cathedrum room build into the earth. Decaying wood pews stand in lines to either side of you, dust and thick cobwebs coating them. At the dias, a statue of St. Laurens stands behind the pulpit, lit only by hundreds of flickering candles.")
+
+input()
+
+print("A shadowy figure stands at the pulpit. His wretched mask made of leathered flesh. He bares blood soaked teeth at you, drawing a laspistol as you dive for cover.")
+
+input()
+
+combat(player, elite_enemy)
+time.sleep(2)
+
+print("\nWith the heretic dead, you can take time to check the room. Crates with strange markings on them lay in one corner, they seem Chaos in origin, and your mind hurts to even look at them. A dataslate rests on the old pulpit, and the heretic may have some supplies.\n")
+
+input()
+
+def pulpit_room():
+  pulpit_exit = False
+  proom1_looted = False
+  hereticlooted = False
+  while not pulpit_exit:
+   proomchoice = input("What do you do?\n1:Search the Crates\n2:Search the Dataslate\n3:Loot the Heretic\n4:Leave\n")
+   if proomchoice == "1":
+    print("The crates are covered with Chaos sigils.\n")
+    proom1choice = input("1: Destroy the Crates\n2: Loot the Crates\n")
+    if proom1choice == "2":
+      if proom1_looted == True:
+        print("The supplies have been looted, the crates are empty.")
+        time.sleep(3)
+
+      if proom1_looted == False:
+        print("The supplies inside are useful, but the sigils burn themselves into your brain.\n")
+        player.items.append("Bandage")
+        player.ammo += 2
+        player.count += 1
+        proom1_looted = True
+        time.sleep(3)
+
+    if proom1choice == "1":
+      print("You destroy the supplies, ammunition isn't worth the taint of Chaos.")
+      player.count -= 1
+      proom1_looted = True
+      time.sleep(3)
+    
+   if proomchoice == "2":
+    print("The dataslate reads:\n+++")
+    time.sleep(3)
+
+   if proomchoice == "3":
+      if hereticlooted == True:
+        print("The body is looted, there is nothing more to do here.")
+        time.sleep(3)
+      if hereticlooted == False:
+        print("You loot the heretic's body. You take their Stub Pistol and 1 ammo.")
+        player.items.append("Stub Pistol")
+        player.ammo += 1
+        hereticlooted = True
+        time.sleep(3)
+
+   if proomchoice == "4":
+    pulpit_exit = True
+   
+   else:
+    print("Invalid Input")
+
+      
+pulpit_room()
+
+print("Beyond the cathedral room begins the true tomb of St. Laurens. Rows of cacophogi line the walls on both sides. A plaque indentifies the bodies as the honor guard of the Saint. Sisters of the Ebon Chalice who gave their lives in defense of the Saint.")
+
+input()
+
+print("Sounds eminate from the tomb beyond. The echos of chants and ancient rites. Something terrible is happening at the heart of the crypt. You steel yourself, and move forward.")
+
+input()
+
+print("At the end of the row of carcophogi lies a single split path. Carved into the marble is a set of instructions.")
+
+input()
+
+print("+++Do You Walk the Path of the Saint? Or the Path of the Repentant?+++")
+
+input()
+
+def Saint():
+  saintexit = False
+  saintenemy = False
+
+  while not saintexit and saintenemy:
+    print("You round the corner of the Path of the Saint. Immediately, the world is plunged into darkness. Your lumen barely shines ahead, as if something is swallowing the light itself.")
+
+    input()
+
+    print("A dark voice speaks in your mind its very voice chilling your soul.")
+
+    input()
+
+    print(player.name + ". Servant of the corpse god. Come and serve me instead, together we can bring true peace to this forsaken galaxy.")
+
+    input()
+
+    saintchoice = input("What do you do?\n1:Recite a litany to the Emperor, resisting the entity.\n2:Attack the darkness, looking for a source of the voice.\n3:Agree to join the entity.")
+
+    if saintchoice == "1":
+      print("Your litany to the Emperor forces the voice from your mind, a wall of sheer willpower shielding your soul from the entity.")
+
+      input()
+
+      print("A psychic rage roils around you, warping the very halls. Suddenly, from the darkness, another heretic jumps forward, ambushing you.")
+
+      input()
+
+      combat(player, elite_enemy)
+
+      saintenemy = True
+      saintexit = True
+      
+    if saintchoice == "2":
+      print("You attack the hallway wildly. The voice laughs inside your head, and from behind you a heretic springs forth, ready to kill you.")
+
+      input()
+
+      combat(player, elite_enemy)
+
+      saintenemy = True
+      saintexit = True
+
+    if saintchoice == "3":
+      
+      print("You feel your mind embrace the voice. It is right, you cannot resist any longer. The corpse god must fall, humanity will never be free from its shackles while under the Imperium. A heretic steps into your path, then moves aside, gesturing you deeper into the crypt.")
+
+      input()
+
+      player.health += 10
+      player.count += 1
+      saintexit = True
+      saintenemy = True
+
+
+def Repentant():
+  repexit = False
+
+  while not repexit:
+    print("The path of the repentant is a small, marble hall. Dim torchlight flickers on either side, and a dias of white marble with an ebon chalice starkly stands in the center.")
+
+    input()
+
+    print("")
+
+  
+
 
 
